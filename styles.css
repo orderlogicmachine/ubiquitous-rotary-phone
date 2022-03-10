@@ -1,0 +1,43 @@
+body 
+{
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100%;
+  margin: 0;
+  padding: 1em;
+  font-size: clamp(0.5rem, 2.5vmin, 1.5rem);
+}
+
+.keyboard 
+{
+  display: grid;
+  grid-template-columns: repeat(20, 1.25em);
+  grid-auto-rows: 67px;
+  gap: 0.4em;
+  justify-content: center;
+}
+
+.key 
+{
+  font-size: 18px;
+  grid-column: span 2;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #D3D6DA;
+  color: #000000;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.key.large 
+{
+  grid-column: span 3;
+}
