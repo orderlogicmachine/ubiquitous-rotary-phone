@@ -46,14 +46,18 @@ function handleKeyPress(letter)
     return;
   }
 
-  if (letter.key === "Backspace" || letter.key === "Delete") {
+  else if (letter.key === "Backspace" || letter.key === "Delete") {
     backspace();
     return;
   }
 
-  if (letter.key.match(/^[a-z]$/)) {
+  else if (letter.key.match(/^[a-z]$/)) {
     pressKey(letter.key);
     return;
+  }
+  
+  else {
+    console.log("What a weird key!")
   }
 }
 
