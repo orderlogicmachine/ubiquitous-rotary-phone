@@ -1,10 +1,17 @@
 const wordLength = 5;
 const keyboard = document.querySelector("[data-keyboard]");
 const gameGrid = document.querySelector("[data-gameGrid]");
+let dictionary;
+let answers;
 
-fetch('wordList.json')
+fetch("wordList.json")
   .then(response => response.json())
-  .then(data => console.log(data));
+  .then(data => {
+    dictionary = data.dictionary;
+    answers = data.answers;
+    console.log(dictionary)
+    console.log(answers)
+  })
 
 // remember to remove these
 console.log(keyboard);
