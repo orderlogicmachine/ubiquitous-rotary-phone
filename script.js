@@ -40,7 +40,7 @@ function handleMouseClick(letter)
   }
 
   if (letter.target.matches("[data-enter]")) {
-    guess();
+    checkGuess();
     return;
   }
 
@@ -53,7 +53,7 @@ function handleMouseClick(letter)
 function handleKeyPress(letter)
 {
   if (letter.key === "Enter") {
-    guess();
+    checkGuess();
     return;
   }
 
@@ -92,7 +92,7 @@ function deleteKey()
   delete lastTile.dataset.letter
 }
 
-function submitGuess()
+function checkGuess()
 {
   const activeTiles = [...getActiveTiles()]
   if (activeTiles.length !== wordLength) {
@@ -171,7 +171,7 @@ function checkWinLose(guess, tiles)
     return
   }
 
-  const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])")
+  const remainingTiles = gameGrid.querySelectorAll(":not([data-letter])")
   if (remainingTiles.length === 0) {
     // showAlert(targetWord.toUpperCase(), null)
     stopInteraction()
