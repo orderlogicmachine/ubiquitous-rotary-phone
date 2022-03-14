@@ -18,6 +18,7 @@ body
   grid-auto-rows: 67px;
   gap: 0.3em;
   justify-content: center;
+  margin-bottom: 8px;
 }
 
 .key 
@@ -122,4 +123,32 @@ header button
 header .menuRight, .menuLeft
 {
  width: 70px;
+}
+
+.tile[data-state="active"] 
+{
+  border-color: #878A8C;
+}
+
+.tile[data-state="wrong"] 
+{
+  border: none;
+  background-color: #787C7E;
+}
+
+.tile[data-state="wrong-location"] 
+{
+  border: none;
+  background-color: #C9B458;
+}
+
+.tile[data-state="correct"] 
+{
+  border: none;
+  background-color: #6AAA64;
+}
+
+.tile.flip 
+{
+  transform: rotateX(90deg);
 }

@@ -81,6 +81,71 @@ function deleteKey()
   delete lastTile.dataset.letter
 }
 
+function submitGuess()
+{
+  const activeTiles = [...getActiveTiles()]
+  if (activeTiles.length !== wordLength) {
+    showAlert("Not enough letters")
+    shakeTiles(activeTiles)
+    return
+  }
+
+  const guess = activeTiles.reduce((word, tile) =>
+  {
+    return word + tile.dataset.letter
+  }, "")
+
+  if (!dictionary.includes(guess)) {
+    showAlert("Not in word list")
+    shakeTiles(activeTiles)
+    return
+  }
+
+  stopInteraction()
+  activeTiles.forEach((...params) => flipTile(...params, guess))
+}
+
+function flipTile(tile, index, array, guess)
+{
+  const letter = tile.dataset.letter
+  const key = keyboard.querySelector(`[data-key="${letter}"i]`)
+  setTimeout(() =>
+  {
+    tile.classList.add("flip")
+  }, (index * FLIP_ANIMATION_DURATION) / 2)
+
+  tile.addEventListener(
+    "transitionend",
+    () =>
+    {
+      tile.classList.remove("flip")
+      if (targetWord[index] === letter) {
+        tile.dataset.state = "correct"
+        key.classList.add("correct")
+      } else if (targetWord.includes(letter)) {
+        tile.dataset.state = "wrong-location"
+        key.classList.add("wrong-location")
+      } else {
+        tile.dataset.state = "wrong"
+        key.classList.add("wrong")
+      }
+
+      if (index === array.length - 1) {
+        tile.addEventListener(
+          "transitionend",
+          () =>
+          {
+            gameStart()
+            checkWinLose(guess, array)
+          },
+          { once: true }
+        )
+      }
+    },
+    { once: true }
+  )
+}
+
 function getActiveTiles()
 {
   return gameGrid.querySelectorAll('[data-state="active"]')
