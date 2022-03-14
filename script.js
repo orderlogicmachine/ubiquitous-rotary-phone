@@ -2,6 +2,10 @@ const wordLength = 5;
 const keyboard = document.querySelector("[data-keyboard]");
 const gameGrid = document.querySelector("[data-gameGrid]");
 
+fetch('wordList.json')
+  .then(response => response.json())
+  .then(data => console.log(data));
+
 // remember to remove these
 console.log(keyboard);
 console.log(gameGrid);
@@ -55,7 +59,7 @@ function handleKeyPress(letter)
     pressKey(letter.key);
     return;
   }
-  
+
   else {
     console.log("What a weird key!")
   }
@@ -149,4 +153,20 @@ function flipTile(tile, index, array, guess)
 function getActiveTiles()
 {
   return gameGrid.querySelectorAll('[data-state="active"]')
+}
+
+function checkWinLose(guess, tiles)
+{
+  if (guess === targetWord) {
+    // showAlert("You Win", 5000)
+    // danceTiles(tiles)
+    stopInteraction()
+    return
+  }
+
+  const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])")
+  if (remainingTiles.length === 0) {
+    // showAlert(targetWord.toUpperCase(), null)
+    stopInteraction()
+  }
 }
