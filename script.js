@@ -4,25 +4,29 @@ const gameGrid = document.querySelector("[data-gameGrid]");
 let dictionary;
 let answers;
 
-fetch("wordList.json")
-  .then(response => response.json())
-  .then(data =>
-  {
-    dictionary = data.dictionary;
-    answers = data.answers;
-    console.log(dictionary)
-    console.log(answers)
-    const dayZero = new Date("January 1, 2022");
-    const msOffset = Date.now() - dayZero;
-    const dayOffset = (msOffset / 86400000);
-    const targetWord = answers[Math.floor(dayOffset)];
-    console.log(targetWord);
-  })
+async function foo()
+{
+  await fetch("wordList.json")
+    .then(response => response.json())
+    .then(data =>
+    {
+      dictionary = data.dictionary;
+      answers = data.answers;
+      console.log(dictionary)
+      console.log(answers)
+      const dayZero = new Date("January 1, 2022");
+      const msOffset = Date.now() - dayZero;
+      const dayOffset = (msOffset / 86400000);
+      const targetWord = answers[Math.floor(dayOffset)];
+      console.log(targetWord + " inside the fetch block")
+    })
+    return targetWord;
+}
 
 // remember to remove these
 console.log(keyboard);
 console.log(gameGrid);
-console.log(targetWord);
+console.log(targetWord + " outside the fetch block");
 
 gameStart();
 
