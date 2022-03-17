@@ -20,8 +20,9 @@ async function foo()
       const targetWord = answers[Math.floor(dayOffset)];
       console.log(targetWord + " inside the fetch block")
     })
-    return targetWord;
 }
+
+foo()
 
 // remember to remove these
 console.log(keyboard);
