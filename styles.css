@@ -46,8 +46,7 @@ body
   font-size: 24px;
 }
 
-.key:hover,
-.key:focus 
+.key:hover
 {
   background-color: #d3d6da80;
 }
