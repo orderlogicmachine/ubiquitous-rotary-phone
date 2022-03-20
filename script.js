@@ -12980,6 +12980,8 @@ const answers = [
 ]
 
 const wordLength = 5;
+const FLIP_ANIMATION_DURATION = 500
+const DANCE_ANIMATION_DURATION = 500
 const keyboard = document.querySelector("[data-keyboard]");
 const gameGrid = document.querySelector("[data-gameGrid]");
 const overlay = document.querySelector("[data-overlay]");
@@ -13034,38 +13036,39 @@ function gameStop()
 }
 
 // maybe rework these into switch cases?
-function handleMouseClick(letter)
+function handleMouseClick(e)
 {
-  if (letter.target.matches("[data-letter]")) {
-    pressKey(letter.target.dataset.key);
-    return;
+  console.log("Click detected")
+  if (e.target.matches("[data-key]")) {
+    pressKey(e.target.dataset.key)
+    return
   }
 
-  if (letter.target.matches("[data-enter]")) {
-    takeAGuess();
-    return;
+  if (e.target.matches("[data-enter]")) {
+    takeAGuess()
+    return
   }
 
-  if (letter.target.matches("[data-backspace]")) {
-    backspace();
-    return;
+  if (e.target.matches("[data-backspace]")) {
+    backspace()
+    return
   }
 }
 
-function handleKeyPress(letter)
+function handleKeyPress(e)
 {
-  if (letter.key === "Enter") {
+  if (e.key === "Enter") {
     takeAGuess();
     return;
   }
 
-  else if (letter.key === "Backspace" || letter.key === "Delete") {
+  else if (e.key === "Backspace" || e.key === "Delete") {
     backspace();
     return;
   }
 
-  else if (letter.key.match(/^[a-z]$/)) {
-    pressKey(letter.key);
+  else if (e.key.match(/^[a-z]$/)) {
+    pressKey(e.key);
     return;
   }
 
@@ -13076,9 +13079,11 @@ function handleKeyPress(letter)
 
 function pressKey(key)
 {
+  console.log("Pressing a key")
   const activeTiles = getActiveTiles()
   if (activeTiles.length >= wordLength) return
   const nextTile = gameGrid.querySelector(":not([data-letter])")
+  console.log(key)
   nextTile.dataset.letter = key.toLowerCase()
   nextTile.textContent = key
   nextTile.dataset.state = "active"
@@ -13086,6 +13091,7 @@ function pressKey(key)
 
 function backspace()
 {
+  console.log("Deleting a key")
   const activeTiles = getActiveTiles()
   const lastTile = activeTiles[activeTiles.length - 1]
   if (lastTile == null) return
@@ -13096,6 +13102,7 @@ function backspace()
 
 function takeAGuess()
 {
+  console.log("Taking a guess")
   const activeTiles = [...getActiveTiles()]
   if (activeTiles.length !== wordLength) {
     showOverlay("Not enough letters")
@@ -13114,14 +13121,14 @@ function takeAGuess()
     return
   }
 
-  stopInteraction()
+  gameStop()
   activeTiles.forEach((...params) => flipTile(...params, guess))
 }
 
 function flipTile(tile, index, array, guess)
 {
   const letter = tile.dataset.letter
-  const key = keyboard.querySelector(`[data-key="${letter}"i]`)
+  const key = keyboard.querySelector(`[data-letter="${letter}"i]`)
   setTimeout(() =>
   {
     tile.classList.add("flip")
@@ -13182,18 +13189,53 @@ function showOverlay(message, duration = 1000)
   }, duration)
 }
 
+function shakeTiles(tiles)
+{
+  tiles.forEach(tile =>
+  {
+    tile.classList.add("shake")
+    tile.addEventListener(
+      "animationend",
+      () =>
+      {
+        tile.classList.remove("shake")
+      },
+      { once: true }
+    )
+  })
+}
+
 function checkWinLose(guess, tiles)
 {
   if (guess === targetWord) {
     showOverlay("You Win", 5000)
-    // danceTiles(tiles)
-    stopInteraction()
+    danceTiles(tiles)
+    gameStop()
     return
   }
 
   const remainingTiles = gameGrid.querySelectorAll(":not([data-letter])")
   if (remainingTiles.length === 0) {
     showOverlay(targetWord.toUpperCase(), null)
-    stopInteraction()
+    gameStop()
   }
+}
+
+function danceTiles(tiles)
+{
+  tiles.forEach((tile, index) =>
+  {
+    setTimeout(() =>
+    {
+      tile.classList.add("dance")
+      tile.addEventListener(
+        "animationend",
+        () =>
+        {
+          tile.classList.remove("dance")
+        },
+        { once: true }
+      )
+    }, (index * DANCE_ANIMATION_DURATION) / 5)
+  })
 }
