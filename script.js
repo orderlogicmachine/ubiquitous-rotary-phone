@@ -12980,15 +12980,15 @@ const answers = [
 ]
 
 const wordLength = 5;
-const FLIP_ANIMATION_DURATION = 500
-const DANCE_ANIMATION_DURATION = 500
+const flipDuration = 500
+const danceDuration = 500
 const keyboard = document.querySelector("[data-keyboard]");
 const gameGrid = document.querySelector("[data-gameGrid]");
 const overlay = document.querySelector("[data-overlay]");
 const dayZero = new Date(2022, 0, 1)
 const msOffset = Date.now() - dayZero
-const dayOffset = msOffset / 86400000
-const targetWord = answers[Math.floor(dayOffset)]
+const daysOffset = msOffset / 86400000
+const wordOfTheDay = answers[Math.floor(daysOffset)]
 
 // let dictionary;
 // let answers;
@@ -13010,66 +13010,69 @@ const targetWord = answers[Math.floor(dayOffset)]
 //       // calculate the number of days between now and 1 Jan 2022
 //       const dayZero = new Date("January 1, 2022");
 //       const msOffset = Date.now() - dayZero;
-//       const dayOffset = (msOffset / 86400000);
+//       const daysOffset = (msOffset / 86400000);
 //       // use that number to generate the index value for the answers array
-//       const targetWord = answers[Math.floor(dayOffset)];
-//       console.log(targetWord + " inside the fetch block")
+//       const wordOfTheDay = answers[Math.floor(daysOffset)];
+//       console.log(wordOfTheDay + " inside the fetch block")
 //     })
 // }
 
 // wordStuff()
 
-// console.log(targetWord + " outside the fetch block");
+// console.log(wordOfTheDay + " outside the fetch block");
 
-gameStart();
+startRound();
 
-function gameStart()
+function startRound()
 {
+  console.log("Starting round")
   document.addEventListener("click", handleMouseClick);
-  document.addEventListener("press", handleKeyPress);
+  document.addEventListener("keydown", handleKeyPress);
 }
 
-function gameStop()
+function endRound()
 {
+  console.log("Stopping round")
   document.removeEventListener("click", handleMouseClick);
-  document.removeEventListener("press", handleKeyPress);
+  document.removeEventListener("keydown", handleKeyPress);
 }
 
 // maybe rework these into switch cases?
-function handleMouseClick(e)
+function handleMouseClick(clicked)
 {
   console.log("Click detected")
-  if (e.target.matches("[data-key]")) {
-    pressKey(e.target.dataset.key)
+  if (clicked.target.matches("[data-key]")) {
+    pressKey(clicked.target.dataset.key)
     return
   }
 
-  if (e.target.matches("[data-enter]")) {
+  if (clicked.target.matches("[data-enter]")) {
     takeAGuess()
     return
   }
 
-  if (e.target.matches("[data-backspace]")) {
+  if (clicked.target.matches("[data-backspace]")) {
     backspace()
     return
   }
 }
 
-function handleKeyPress(e)
+function handleKeyPress(pressed)
 {
-  if (e.key === "Enter") {
-    takeAGuess();
-    return;
+  console.log("Keystroke detected")
+  if (pressed.key === "Enter") {
+    takeAGuess()
+    return
   }
 
-  else if (e.key === "Backspace" || e.key === "Delete") {
-    backspace();
-    return;
+  else if (pressed.key === "Backspace" || pressed.key === "Delete") {
+    backspace()
+    return
   }
 
-  else if (e.key.match(/^[a-z]$/)) {
-    pressKey(e.key);
-    return;
+  else if (pressed.key.match(/^[a-z]$/)) {
+    pressKey(pressed.key)
+    return
   }
 
   else {
@@ -13083,7 +13086,6 @@ function pressKey(key)
   const activeTiles = getActiveTiles()
   if (activeTiles.length >= wordLength) return
   const nextTile = gameGrid.querySelector(":not([data-letter])")
-  console.log(key)
   nextTile.dataset.letter = key.toLowerCase()
   nextTile.textContent = key
   nextTile.dataset.state = "active"
@@ -13115,36 +13117,37 @@ function takeAGuess()
     return word + tile.dataset.letter
   }, "")
 
-  if (!dictionary.includes(guess)) {
+  if (!dictionary.includes(guess) && !answers.includes(guess)) {
     showOverlay("Not in word list")
     shakeTiles(activeTiles)
     return
   }
 
-  gameStop()
+  endRound()
   activeTiles.forEach((...params) => flipTile(...params, guess))
 }
 
 function flipTile(tile, index, array, guess)
 {
+  console.log("Flipping tiles")
   const letter = tile.dataset.letter
-  const key = keyboard.querySelector(`[data-letter="${letter}"i]`)
+  const key = keyboard.querySelector(`[data-key="${letter}"i]`)
   setTimeout(() =>
   {
     tile.classList.add("flip")
-  }, (index * FLIP_ANIMATION_DURATION) / 2)
+  }, (index * flipDuration) / 2)
 
   tile.addEventListener(
     "transitionend",
     () =>
     {
       tile.classList.remove("flip")
-      if (targetWord[index] === letter) {
+      if (wordOfTheDay[index] === letter) {
         tile.dataset.state = "correct"
         key.classList.add("correct")
-      } else if (targetWord.includes(letter)) {
-        tile.dataset.state = "wrong-location"
-        key.classList.add("wrong-location")
+      } else if (wordOfTheDay.includes(letter)) {
+        tile.dataset.state = "wrongSpot"
+        key.classList.add("wrongSpot")
       } else {
         tile.dataset.state = "wrong"
         key.classList.add("wrong")
@@ -13155,8 +13158,8 @@ function flipTile(tile, index, array, guess)
           "transitionend",
           () =>
           {
-            gameStart()
-            checkWinLose(guess, array)
+            startRound()
+            checkForWin(guess, array)
           },
           { once: true }
         )
@@ -13205,19 +13208,19 @@ function shakeTiles(tiles)
   })
 }
 
-function checkWinLose(guess, tiles)
+function checkForWin(guess, tiles)
 {
-  if (guess === targetWord) {
-    showOverlay("You Win", 5000)
+  if (guess === wordOfTheDay) {
+    showOverlay("You Win!", 5000)
     danceTiles(tiles)
-    gameStop()
+    endRound()
     return
   }
 
   const remainingTiles = gameGrid.querySelectorAll(":not([data-letter])")
   if (remainingTiles.length === 0) {
-    showOverlay(targetWord.toUpperCase(), null)
-    gameStop()
+    showOverlay(wordOfTheDay.toUpperCase(), null)
+    endRound()
   }
 }
 
@@ -13236,6 +13239,6 @@ function danceTiles(tiles)
         },
         { once: true }
       )
-    }, (index * DANCE_ANIMATION_DURATION) / 5)
+    }, (index * danceDuration) / 5)
   })
 }

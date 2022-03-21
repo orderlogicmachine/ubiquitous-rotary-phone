@@ -1,7 +1,7 @@
 body 
 {
   background-color: #FFFFFF;
-  font-family: Helvetica, Segoe UI, sans-serif;
+  font-family: Helvetica, "Segoe UI", sans-serif;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -53,17 +53,30 @@ body
 
 .key.wrong 
 {
+  color: #FFFFFF;
   background-color: #787C7E;
 }
 
-.key.wrong-location 
+.key.wrongSpot
 {
+  color: #FFFFFF;
   background-color: #C9B458;
+}
+
+.key.wrongSpot:hover
+{
+  background-color: #C9B45880;
 }
 
 .key.correct 
 {
+  color: #FFFFFF;
   background-color: #6AAA64;
+}
+
+.key.correct:hover
+{
+  background-color: #6AAA6480;
 }
 
 .gameGrid 
@@ -82,7 +95,7 @@ body
 .tile 
 {
   font-size: 2em;
-  color: black;
+  color: #000000;
   border: 2px solid #D3D6DA;
   text-transform: uppercase;
   font-weight: bold;
@@ -131,18 +144,21 @@ header .menuRight, .menuLeft
 
 .tile[data-state="wrong"] 
 {
+  color: #FFFFFF;
   border: none;
   background-color: #787C7E;
 }
 
-.tile[data-state="wrong-location"] 
+.tile[data-state="wrongSpot"] 
 {
+  color: #FFFFFF;
   border: none;
   background-color: #C9B458;
 }
 
 .tile[data-state="correct"] 
 {
+  color: #FFFFFF;
   border: none;
   background-color: #6AAA64;
 }
@@ -230,10 +246,11 @@ header .menuRight, .menuLeft
 }
 
 .alert {
+  color: #FFFFFF;
   pointer-events: none;
-  background-color: hsl(204, 7%, 85%);
+  background-color: #000000;
   padding: 0.75em;
-  border-radius: 0.25em;
+  border-radius: 4px;
   opacity: 1;
   transition: opacity 500ms ease-in-out;
   margin-bottom: 0.5em;
