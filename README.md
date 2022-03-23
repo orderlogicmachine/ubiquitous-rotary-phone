@@ -1,16 +1,16 @@
 # ubiquitous-rotary-phone
 
-### wordl, a Wordle replica
+## wordl, a Wordle replica
 
 ##### JD D'Annunzio
 
 Hello everyone! Welcome to my project for the second term of Code Louisville's Front-End Web Development course.
 
-##### Purpose
+#### Purpose
 
 This project is intended to replicate the structure and basic features of Wordle, an existing word-guessing game found **[here](https://www.nytimes.com/games/wordle/index.html)**.
 
-##### Features
+#### Features
 
 *Note: I will endeavor to keep these line addresses current with future changes, but they should remain at least relatively close to their present locations*
 
