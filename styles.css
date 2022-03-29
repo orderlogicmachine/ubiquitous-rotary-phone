@@ -13,6 +13,7 @@ html, body
 
 body 
 {
+  box-sizing: border-box;
   background-color: #FFFFFF;
   font-family: Helvetica, "Segoe UI", sans-serif;
   display: flex;
