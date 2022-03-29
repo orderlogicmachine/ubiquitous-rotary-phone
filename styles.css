@@ -118,10 +118,10 @@ header
     grid-template-columns: repeat(20, 3.5%);
     grid-auto-rows: 3rem;
     gap: 0.25em;
-    justify-content: center;
+    justify-content: space-evenly;
     /* margin: 0 8px 8px 8px; */
     position: fixed;
-    bottom: 8px;
+    bottom: 0;
     overflow: hidden;
   }
 
@@ -141,12 +141,18 @@ header
     border-radius: 4px;
     cursor: pointer;
     user-select: none;
+    touch-action: manipulation;
   }
 
   .key.large 
   {
     grid-column: span 3;
     font-size: 20px;
+  }
+
+  button > * 
+  {
+    pointer-events: none;
   }
 
 @media only screen and (min-width: 768px)
