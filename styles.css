@@ -52,6 +52,7 @@ header
     border: none;
     background-color: #FFFFFF;
     font-size: 20px;
+    color: #000000;
   }
 
   /* header .menuRight, .menuLeft
@@ -117,11 +118,11 @@ header
     display: grid;
     grid-template-columns: repeat(20, 3.5%);
     grid-auto-rows: 3rem;
-    gap: 0.25em;
+    gap: 4px;
     justify-content: space-evenly;
-    /* margin: 0 8px 8px 8px; */
+    /* margin: 0 8px; */
     position: fixed;
-    bottom: 0;
+    bottom: 4px;
     overflow: hidden;
   }
 
@@ -171,11 +172,11 @@ header
   .gameGrid 
   {
     display: grid;
-    flex: 2 1 auto;
+    flex: 3 1 auto;
     /* justify-content: center;
     align-content: center; */
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 4rem);
+    grid-template-rows: repeat(6, 4rem);
     /* grid-template-columns: repeat(5, 4em);
     grid-template-rows: repeat(6, 4em); */
     padding: 1rem;
@@ -187,8 +188,7 @@ header
     min-width: 320px;
     /* max-width: 500px; */
     min-height: 360px;
-    /* max-height: 568px;
-    width: clamp(300px, calc()) */
+    /* max-height: 568px; */
   }
 
   .tile 
@@ -233,6 +233,7 @@ header
     border: none;
     background-color: #FFFFFF;
     font-size: 24px;
+    color: #000000;
   }
 
   header .menuRight, .menuLeft
