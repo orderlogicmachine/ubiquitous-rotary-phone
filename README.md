@@ -32,4 +32,8 @@ I have implemented the following features:
 
     - script.js, const init, line 97 
 
+#### Notes
+
+This is a vanilla JS project. It was written in VSCode with the Live Server extension and tested primarily in Google Chrome with some iOS/Safari testing.
+
 **Thank you for visiting!**
