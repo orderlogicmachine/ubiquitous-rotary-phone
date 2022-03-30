@@ -324,4 +324,7 @@ function danceTiles(tiles)
       )
     }, (index * danceDuration) / 5)
   })
+  if ("vibrate" in navigator) {
+    vibrate(500);
+  }
 }
