@@ -116,8 +116,8 @@ header
     flex: 1 1 auto;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(20, 3.5%);
-    grid-auto-rows: 3rem;
+    grid-template-columns: repeat(20, 3.5vw);
+    grid-auto-rows: 7vh;
     gap: 4px;
     justify-content: space-evenly;
     /* margin: 0 8px; */
