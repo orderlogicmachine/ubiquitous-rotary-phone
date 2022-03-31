@@ -114,15 +114,15 @@ header
   {
     /* height: 200px; */
     flex: 1 1 auto;
-    width: 100%;
+    width: calc(100vw - 16px);
     display: grid;
     grid-template-columns: repeat(20, 3.5vw);
-    grid-auto-rows: 7vh;
+    grid-auto-rows: 8vh;
     gap: 4px;
     justify-content: space-evenly;
     /* margin: 0 8px; */
     position: fixed;
-    bottom: 4px;
+    bottom: 8px;
     overflow: hidden;
   }
 
